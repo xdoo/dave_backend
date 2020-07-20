@@ -10,7 +10,7 @@ import org.springframework.data.elasticsearch.client.RestClients;
 import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 
 @Configuration
-@EnableElasticsearchRepositories(basePackages = "de.muenchen.dave.repositories")
+@EnableElasticsearchRepositories(basePackages = "de.muenchen.dave.repositories.elasticsearch")
 @Slf4j
 public class ElasticsearchLocalConfig {
 
