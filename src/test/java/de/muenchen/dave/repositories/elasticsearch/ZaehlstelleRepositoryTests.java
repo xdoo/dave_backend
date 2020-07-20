@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.elasticsearch.core.geo.GeoPoint;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -31,7 +32,7 @@ public class ZaehlstelleRepositoryTests {
     public void testCrud() {
 
         // save
-        this.repo.save(this.createZaehlstelle());
+        this.repo.save(createDefaultZaehlstelle());
         assertThat(this.repo.count(), is(equalTo(1L)));
         assertThat(this.repo.existsById(Z_ID), is(true));
 
@@ -54,22 +55,55 @@ public class ZaehlstelleRepositoryTests {
         assertThat(this.repo.existsById(Z_ID), is(false));
     }
 
-    private Zaehlstelle createZaehlstelle() {
+    public static Zaehlstelle createDefaultZaehlstelle() {
+        return createZaehlstelle(
+                Z_ID,
+                "10234X3",
+                "Pelkovenstrasse",
+                10,
+                Z_STADTBEZIRK,
+                new GeoPoint(48.18116, 11.51150),
+                11,
+                "November",
+                Lists.newArrayList(1999, 2004, 2006, 2010, 2013, 2018, 2019),
+                Z_GRUND,
+                Lists.newArrayList("Pelkovenstrasse", "Dachauer Straße", "Baubergerstraße", "Bunzlauer Strasse"),
+                Lists.newArrayList("Tram"),
+                "Bla Blub, Blobber"
+        );
+    }
+
+
+    public static Zaehlstelle createZaehlstelle(
+            String id,
+            String nummer,
+            String name,
+            int stadtbezirkNummer,
+            String stadtbezirk,
+            GeoPoint punkt,
+            int monatNummer,
+            String monat,
+            List<Integer> zaehljahre,
+            String grund,
+            List<String> strassen,
+            List<String> geographie,
+            String suchwoerter
+    ) {
         Zaehlstelle z = new Zaehlstelle();
 
-        z.setId(Z_ID);
-        z.setNummer("10234X3");
-        z.setName("Pelkovenstrasse");
-        z.setStadtbezirkNummer(10);
-        z.setStadtbezirk(Z_STADTBEZIRK);
-        z.setPunkt(new GeoPoint(48.18116, 11.51150));
-        z.setLetzteZaehlungMonatNummer(11);
-        z.setLetzteZaehlungMonat("November");
-        z.setZeahljahre(Lists.newArrayList(1999, 2004, 2006, 2010, 2013, 2018, 2019));
-        z.setGrundLetzteZaehlung(Z_GRUND);
-        z.setStrassen(Lists.newArrayList("Pelkovenstrasse", "Dachauer Straße", "Baubergerstraße", "Bunzlauer Strasse"));
-        z.setGeographie(Lists.newArrayList("Tram"));
-        z.setSuchwoerter("Bla Blub, Blobber");
+        z.setId(id);
+        z.setNummer(nummer);
+        z.setName(name);
+        z.setStadtbezirkNummer(stadtbezirkNummer);
+        z.setStadtbezirk(stadtbezirk);
+        z.setPunkt(punkt);
+        z.setLetzteZaehlungMonatNummer(monatNummer);
+        z.setLetzteZaehlungMonat(monat);
+        z.setZeahljahre(zaehljahre);
+        z.setGrundLetzteZaehlung(grund);
+        z.setStrassen(strassen);
+        z.setGeographie(geographie);
+        z.setSuchwoerter(suchwoerter);
 
         return z;
     }
