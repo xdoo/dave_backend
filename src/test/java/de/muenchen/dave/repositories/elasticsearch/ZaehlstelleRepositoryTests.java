@@ -22,9 +22,13 @@ public class ZaehlstelleRepositoryTests {
 
     @Autowired ZaehlstelleRepository repo;
 
+    // Zaehlstelle
     private final static String Z_ID = "Z4711";
     private final static String Z_STADTBEZIRK = "Moosach";
     private final static String Z_GRUND = "Umbau der Trambahn";
+
+    // Zaehlung
+    private final static String Z__ID = "Z00001";
 
     @BeforeEach
     public void clearRepo() {
@@ -32,7 +36,7 @@ public class ZaehlstelleRepositoryTests {
     }
 
     @Test
-    public void testCrud() {
+    public void testSimpleCrud() {
 
         // save
         this.repo.save(createDefaultZaehlstelle());
@@ -43,15 +47,19 @@ public class ZaehlstelleRepositoryTests {
         Optional<Zaehlstelle> oz1 = this.repo.findById(Z_ID);
         assertThat(oz1.isPresent(), is(true));
         assertThat(oz1.get().getStadtbezirk(), is(equalTo(Z_STADTBEZIRK)));
+        assertThat(oz1.get().getZaehlungen().isEmpty(), is(false));
+        assertThat(oz1.get().getZaehlungen().get(0).getId(), is(equalTo(Z__ID)));
 
         // update
         String grund = "Änderung der Ampelschaltung";
         Zaehlstelle z1 = oz1.get();
         z1.setGrundLetzteZaehlung(grund);
+        z1.getZaehlungen().add(createDefaultZaehlung());
         this.repo.save(z1);
         Optional<Zaehlstelle> oz2 = this.repo.findById(Z_ID);
         assertThat(oz2.isPresent(), is(true));
         assertThat(oz2.get().getGrundLetzteZaehlung(), is(equalTo(grund)));
+        assertThat(oz2.get().getZaehlungen().size(), is(2));
 
         // delete
         this.repo.deleteById(Z_ID);
@@ -109,14 +117,14 @@ public class ZaehlstelleRepositoryTests {
         z.setStrassen(strassen);
         z.setGeographie(geographie);
         z.setSuchwoerter(suchwoerter);
-        z.setZeahlungen(zaehlungen);
+        z.setZaehlungen(zaehlungen);
 
         return z;
     }
 
     public static Zaehlung createDefaultZaehlung () {
         return createZaehlung(
-                "Z__1",
+                Z__ID,
                 LocalDate.parse("2019-11-20"),
                 2019,
                 "November",
