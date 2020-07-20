@@ -2,17 +2,20 @@ package de.muenchen.dave.repositories.elasticsearch;
 
 import com.google.common.collect.Lists;
 import de.muenchen.dave.domain.elasticsearch.Zaehlstelle;
+import de.muenchen.dave.domain.elasticsearch.Zaehlung;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.elasticsearch.core.geo.GeoPoint;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 
 @SpringBootTest
 public class ZaehlstelleRepositoryTests {
@@ -69,7 +72,8 @@ public class ZaehlstelleRepositoryTests {
                 Z_GRUND,
                 Lists.newArrayList("Pelkovenstrasse", "Dachauer Straße", "Baubergerstraße", "Bunzlauer Strasse"),
                 Lists.newArrayList("Tram"),
-                "Bla Blub, Blobber"
+                "Bla Blub, Blobber",
+                Lists.newArrayList(createDefaultZaehlung())
         );
     }
 
@@ -87,7 +91,8 @@ public class ZaehlstelleRepositoryTests {
             String grund,
             List<String> strassen,
             List<String> geographie,
-            String suchwoerter
+            String suchwoerter,
+            List<Zaehlung> zaehlungen
     ) {
         Zaehlstelle z = new Zaehlstelle();
 
@@ -104,6 +109,57 @@ public class ZaehlstelleRepositoryTests {
         z.setStrassen(strassen);
         z.setGeographie(geographie);
         z.setSuchwoerter(suchwoerter);
+        z.setZeahlungen(zaehlungen);
+
+        return z;
+    }
+
+    public static Zaehlung createDefaultZaehlung () {
+        return createZaehlung(
+                "Z__1",
+                LocalDate.parse("2019-11-20"),
+                2019,
+                "November",
+                Lists.newArrayList("PKW", "LKW", "Fahrrad"),
+                "Änderung Ampelschlatung",
+                "sonnig",
+                "24h",
+                "Werktag",
+                "Herbst",
+                "Schule",
+                ""
+
+        );
+    }
+
+    public static Zaehlung createZaehlung (
+            String id,
+            LocalDate datum,
+            int jahr,
+            String monat,
+            List<String> kategorien,
+            String grund,
+            String wetter,
+            String artDerZaehlung,
+            String tagesTyp,
+            String jahreszeit,
+            String schulzeiten,
+            String suchwoerter
+    ) {
+        Zaehlung z = new Zaehlung();
+
+        z.setId(id);
+        z.setDatum(datum);
+        z.setJahr(jahr);
+        z.setMonat(monat);
+        z.setKategorien(kategorien);
+        z.setGrund(grund);
+        z.setWetter(wetter);
+        z.setArtDerZaehlung(artDerZaehlung);
+        z.setTagesTyp(tagesTyp);
+        z.setJahreszeit(jahreszeit);
+        z.setSchulZeiten(schulzeiten);
+        z.setSuchwörter(suchwoerter);
 
         return z;
     }

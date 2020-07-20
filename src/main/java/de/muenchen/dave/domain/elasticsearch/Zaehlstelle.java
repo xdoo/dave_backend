@@ -52,4 +52,6 @@ public class Zaehlstelle {
     @Field(type = FieldType.Text)
     String suchwoerter;
 
+    List<Zaehlung> zeahlungen;
+
 }
