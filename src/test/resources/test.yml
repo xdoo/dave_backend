@@ -1,0 +1,23 @@
+faker:
+  wetter: ['sonnig', 'leicht bewölkt', 'stark bewölkt', 'regnerisch', 'Schnee']
+
+wetter: ['sonnig', 'leicht bewölkt', 'stark bewölkt', 'regnerisch', 'Schnee']
+
+test:
+  faker:
+    zaehlstelle:
+      stellen:
+        - {bezirknummer: '1', bezirk: 'Altstadt-Lehel', lat: '48.13759', lng: '11.58805', name: 'Maxmonument', platz: '', strassen: 'Maximilianstraße, Thierschstraße', geo: ''}
+        - {bezirknummer: '3', bezirk: 'Maxvorstadt', lat: '48.14758', lng: '11.55887', name: 'Stiglmeierplatz', platz: 'Stiglmeierplatz', strassen: 'Nymphenburger Straße, Dachauer Straße, Brienner Straße, Seidlstraße', geo: ''}
+        - {bezirknummer: '4', bezirk: 'Schwabing-West', lat: '48.17056', lng: '11.56429', name: 'Lerchenauer / Schleißheimer Straße', platz: '', strassen: 'Lerchenauer Straße, Schleißheimer Straße', geo: ''}
+        - {bezirknummer: '5', bezirk: 'Au-Haidhausen', lat: '48.12859', lng: '11.59391', name: 'Rosenheimer Platz', platz: 'Rosenheimer Platz', strassen: 'Rosenheimer Straße, Steinstraße, Franziskanerstraße, Balanstraße, Weißenburger Straße', geo: ''}
+        - {bezirknummer: '6', bezirk: 'Sendling', lat: '48.11689', lng: '11.53807', name: 'Harras', platz: 'Harras', strassen: 'Am Harras, Albert-Roßhaupter-Straße, Meindlstraße, Karwendelstraße', geo: ''}
+        - {bezirknummer: '9', bezirk: 'Neuhausen-Nymphenburg', lat: '48.1629', lng: '11.54222', name: 'Heideckstraße', platz: '', strassen: 'Heideckstraße, Dachauer Straße, Hedwig-Dransfeld-Allee', geo: ''}
+        - {bezirknummer: '10', bezirk: 'Moosach', lat: '48.18114', lng: '11.51151', name: 'Pelkovenstraße', platz: '', strassen: 'Dachauer Straße, Pelkovenstraße, Bunzlauer Straße, Baubergerstraße', geo: ''}
+        - {bezirknummer: '13', bezirk: 'Bogenhausen', lat: '48.15678', lng: '11.60538', name: 'John-F.-Kennedy-Brücke', platz: '', strassen: 'Isarring, Thomas-Mann-Allee', geo: 'Isar, Brücke'}
+        - {bezirknummer: '18', bezirk: 'Untergiesing-Harlaching', lat: '48.10079', lng: '11.5498', name: 'Thalkirchner Brücke', platz: '', strassen: 'Thalkirchner Brücke', geo: 'Isar, Brücke'}
+        - {bezirknummer: '23', bezirk: 'Allach-Untermenzing', lat: '48.17771', lng: '11.47255', name: 'S-Bahn Untermenzing', platz: '', strassen: 'Von-Kahr-Straße', geo: 'Brücke, Bahn'}
+    zaehlung:
+      wetter: ["sonnig", "regnerisch", "bewölkt"]
+      kategorien: ["PKW", "LKW", "LZ", "BUS", "KRAD", "RAD", "FUSS"]
+      grund: ["Tram", "Ampelschaltung", "Wechselverkehrszeichen", "Freigabe LKW", "Abbiegeverbot"]
