@@ -12,6 +12,11 @@ import java.util.stream.Collectors;
 @Slf4j
 public class SucheServiceUtils {
 
+    public final static String WINTER = "Winter";
+    public final static String FRUEHLING = "Frühling";
+    public final static String SOMMER = "Sommer";
+    public final static String HERBST = "Herbst";
+
     /**
      * Gives you the season for a given date.
      *
@@ -21,19 +26,19 @@ public class SucheServiceUtils {
     public static String jahreszeitenDetector(LocalDate d) {
         int m = d.getMonthValue();
         if(m < 3 || m > 11) {
-            return "Winter";
+            return WINTER;
         }
 
         if(m > 2 && m < 6) {
-            return "Frühling";
+            return FRUEHLING;
         }
 
         if(m > 5 && m < 9) {
-            return "Sommer";
+            return SOMMER;
         }
 
         if(m > 8 && m < 12) {
-            return "Herbst";
+            return HERBST;
         }
 
         log.error("Local Date with more than 12 month?!!?");
