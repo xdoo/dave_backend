@@ -1,6 +1,10 @@
 package de.muenchen.dave.domain.elasticsearch;
 
+import com.github.javafaker.Faker;
+import com.github.javafaker.service.FakeValuesService;
+import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -10,9 +14,9 @@ import org.springframework.data.elasticsearch.annotations.GeoPointField;
 import org.springframework.data.elasticsearch.core.geo.GeoPoint;
 
 import java.util.List;
+import java.util.Locale;
 
 @Data
-@NoArgsConstructor
 @Document(indexName = "zaehlstelle")
 public class Zaehlstelle {
 
@@ -40,7 +44,10 @@ public class Zaehlstelle {
     @Field(type = FieldType.Text)
     String letzteZaehlungMonat;
 
-    List<Integer> zeahljahre;
+    @Field(type = FieldType.Integer)
+    int letzteZaehlungJahr;
+
+    List<Integer> zaehljahre;
 
     @Field(type = FieldType.Text)
     String grundLetzteZaehlung;
