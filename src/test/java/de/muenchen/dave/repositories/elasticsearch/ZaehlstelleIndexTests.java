@@ -20,14 +20,6 @@ public class ZaehlstelleIndexTests {
     @Autowired
     ZaehlstelleIndex repo;
 
-    // Zaehlstelle
-    private final static String Z_ID = "Z4711";
-    private final static String Z_STADTBEZIRK = "Moosach";
-    private final static String Z_GRUND = "Umbau der Trambahn";
-
-    // Zaehlung
-    private final static String Z__ID = "Z00001";
-
     @BeforeEach
     public void clearRepo() {
         this.repo.deleteAll();
@@ -48,6 +40,7 @@ public class ZaehlstelleIndexTests {
         Optional<Zaehlstelle> oz1 = this.repo.findById(id);
         assertThat(oz1.isPresent(), is(true));
         assertThat(oz1.get().getStadtbezirk(), is(equalTo(z.getStadtbezirk())));
+        assertThat(oz1.get().getZaehlungen().size(), is(equalTo(z.getZaehlungen().size())));
 
         // update
         oz1.get().setName(z.getName() + "_TEST");
@@ -57,7 +50,7 @@ public class ZaehlstelleIndexTests {
         assertThat(oz2.get().getName(), is(equalTo(z.getName()+ "_TEST")));
 
         // delete
-//        this.repo.deleteById(id);
-//        assertThat(this.repo.existsById(id), is(false));
+        this.repo.deleteById(id);
+        assertThat(this.repo.existsById(id), is(false));
     }
 }
