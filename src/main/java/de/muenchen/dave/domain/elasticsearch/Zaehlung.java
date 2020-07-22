@@ -38,6 +38,6 @@ public class Zaehlung {
 
     String schulZeiten; // Ferien, Schule
 
-    String suchwörter;
+    String suchwoerter;
 
 }
