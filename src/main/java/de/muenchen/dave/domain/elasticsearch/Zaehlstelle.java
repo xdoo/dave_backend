@@ -44,7 +44,10 @@ public class Zaehlstelle {
     @Field(type = FieldType.Text)
     String letzteZaehlungMonat;
 
-    List<Integer> zeahljahre;
+    @Field(type = FieldType.Integer)
+    int letzteZaehlungJahr;
+
+    List<Integer> zaehljahre;
 
     @Field(type = FieldType.Text)
     String grundLetzteZaehlung;

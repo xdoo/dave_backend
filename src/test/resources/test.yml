@@ -1,8 +1,3 @@
-faker:
-  wetter: ['sonnig', 'leicht bewölkt', 'stark bewölkt', 'regnerisch', 'Schnee']
-
-wetter: ['sonnig', 'leicht bewölkt', 'stark bewölkt', 'regnerisch', 'Schnee']
-
 test:
   faker:
     zaehlstelle:
@@ -19,5 +14,8 @@ test:
         - {bezirknummer: '23', bezirk: 'Allach-Untermenzing', lat: '48.17771', lng: '11.47255', name: 'S-Bahn Untermenzing', platz: '', strassen: 'Von-Kahr-Straße', geo: 'Brücke, Bahn'}
     zaehlung:
       wetter: ["sonnig", "regnerisch", "bewölkt"]
-      kategorien: ["PKW", "LKW", "LZ", "BUS", "KRAD", "RAD", "FUSS"]
+      kategorie: ["PKW", "LKW", "LZ", "BUS", "KRAD", "RAD", "FUSS"]
       grund: ["Tram", "Ampelschaltung", "Wechselverkehrszeichen", "Freigabe LKW", "Abbiegeverbot"]
+      art: ["Hauptverkehrsrichtung/Oberfläche/Hoch", "Querschnitt", "Querschnitt/Sonderztählung", "Querschnitt/Hauptverkehrsrichtung/Oberfläche/Hoch", "Teilknoten"]
+      zeit: ["2x4h", "16h", "24h"]
+      schule: ["Schule", "Schule", "Schule", "Ferien"]

@@ -7,8 +7,10 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.primitives.Doubles;
 import com.google.common.primitives.Ints;
+import de.muenchen.dave.services.SucheServiceUtils;
 import org.springframework.data.elasticsearch.core.geo.GeoPoint;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -25,6 +27,12 @@ public class ZaehlstelleRandomFactory {
     private final static String STRASSEN = "strassen";
     private final static String GEO = "geo";
 
+    /**
+     * Creates a random "zaehlstelle". You can find the data under
+     * /test/resources/test.yml.
+     *
+     * @return
+     */
     public static Zaehlstelle getOne() {
 
         Map<String,String> x = (Map<String, String>) service.fetch("zaehlstelle.stellen");
@@ -39,6 +47,19 @@ public class ZaehlstelleRandomFactory {
         z.setPunkt(new GeoPoint(Doubles.tryParse(x.get(LAT)), Doubles.tryParse(x.get(LNG))));
         z.setStrassen(Lists.newArrayList(Splitter.on(",").trimResults().omitEmptyStrings().split(x.get(STRASSEN))));
         z.setGeographie(Lists.newArrayList(Splitter.on(",").trimResults().omitEmptyStrings().split(x.get(GEO))));
+
+        // Zaehlungen
+        List<Zaehlung> zls = ZaehlungRandomFactory.getSome();
+        z.setZaehlungen(zls);
+
+        Zaehlung zl1 = SucheServiceUtils.getLetzteZaehlung(zls);
+
+        z.setLetzteZaehlungMonat(zl1.getMonat());
+        z.setLetzteZaehlungMonatNummer(zl1.getDatum().getMonthValue());
+        z.setGrundLetzteZaehlung(zl1.getGrund());
+        z.setLetzteZaehlungJahr(zl1.getJahr());
+
+        z.setZaehljahre(SucheServiceUtils.getZaehljahre(zls));
 
         return z;
     }

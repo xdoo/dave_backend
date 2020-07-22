@@ -22,6 +22,10 @@ public class Zaehlung {
 
     String monat;
 
+    String tagesTyp;
+
+    String jahreszeit;
+
     List<String> kategorien;
 
     String grund;
@@ -30,9 +34,7 @@ public class Zaehlung {
 
     String artDerZaehlung;
 
-    String tagesTyp;
-
-    String jahreszeit;
+    String zaehlZeit;
 
     String schulZeiten; // Ferien, Schule
 

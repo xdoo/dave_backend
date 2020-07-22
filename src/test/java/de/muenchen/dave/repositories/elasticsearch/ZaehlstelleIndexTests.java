@@ -1,20 +1,13 @@
 package de.muenchen.dave.repositories.elasticsearch;
 
-import com.github.javafaker.Faker;
-import com.google.common.collect.Lists;
 import de.muenchen.dave.domain.elasticsearch.Zaehlstelle;
 import de.muenchen.dave.domain.elasticsearch.ZaehlstelleRandomFactory;
-import de.muenchen.dave.domain.elasticsearch.Zaehlung;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.time.LocalDate;
-import java.time.format.TextStyle;
 import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -22,9 +15,10 @@ import static org.hamcrest.Matchers.*;
 
 @SpringBootTest
 @Slf4j
-public class ZaehlstelleRepositoryTests {
+public class ZaehlstelleIndexTests {
 
-    @Autowired ZaehlstelleRepository repo;
+    @Autowired
+    ZaehlstelleIndex repo;
 
     // Zaehlstelle
     private final static String Z_ID = "Z4711";
@@ -63,7 +57,7 @@ public class ZaehlstelleRepositoryTests {
         assertThat(oz2.get().getName(), is(equalTo(z.getName()+ "_TEST")));
 
         // delete
-        this.repo.deleteById(id);
-        assertThat(this.repo.existsById(id), is(false));
+//        this.repo.deleteById(id);
+//        assertThat(this.repo.existsById(id), is(false));
     }
 }
