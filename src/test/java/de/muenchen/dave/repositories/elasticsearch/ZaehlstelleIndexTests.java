@@ -32,7 +32,12 @@ public class ZaehlstelleIndexTests {
         String id = z.getId();
 
         // save
-        this.repo.save(z);
+        try {
+            this.repo.save(z);
+        } catch (Exception e) {
+            log.error("Fehler - " + e.toString());
+        }
+
         assertThat(this.repo.count(), is(equalTo(1L)));
         assertThat(this.repo.existsById(id), is(true));
 

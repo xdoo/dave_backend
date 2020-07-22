@@ -7,7 +7,7 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.primitives.Doubles;
 import com.google.common.primitives.Ints;
-import de.muenchen.dave.services.SucheServiceUtils;
+import de.muenchen.dave.services.IndexServiceUtils;
 import org.springframework.data.elasticsearch.core.geo.GeoPoint;
 
 import java.util.List;
@@ -23,7 +23,6 @@ public class ZaehlstelleRandomFactory {
     private final static String LAT = "lat";
     private final static String LNG = "lng";
     private final static String NAME = "name";
-    private final static String PLATZ = "platz";
     private final static String STRASSEN = "strassen";
     private final static String GEO = "geo";
 
@@ -52,14 +51,14 @@ public class ZaehlstelleRandomFactory {
         List<Zaehlung> zls = ZaehlungRandomFactory.getSome();
         z.setZaehlungen(zls);
 
-        Zaehlung zl1 = SucheServiceUtils.getLetzteZaehlung(zls);
+        Zaehlung zl1 = IndexServiceUtils.getLetzteZaehlung(zls);
 
         z.setLetzteZaehlungMonat(zl1.getMonat());
         z.setLetzteZaehlungMonatNummer(zl1.getDatum().getMonthValue());
         z.setGrundLetzteZaehlung(zl1.getGrund());
         z.setLetzteZaehlungJahr(zl1.getJahr());
 
-        z.setZaehljahre(SucheServiceUtils.getZaehljahre(zls));
+        z.setZaehljahre(IndexServiceUtils.getZaehljahre(zls));
 
         return z;
     }

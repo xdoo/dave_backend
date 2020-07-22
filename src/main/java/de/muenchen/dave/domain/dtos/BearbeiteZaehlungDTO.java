@@ -8,6 +8,8 @@ import java.time.LocalDate;
 public class BearbeiteZaehlungDTO {
 
     LocalDate datum;
+    String tagesTyp;
+    String kategorien;
     String grund;
     String wetter;
     String artDerZaehlung;
