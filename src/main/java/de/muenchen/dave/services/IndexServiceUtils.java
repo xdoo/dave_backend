@@ -1,24 +1,75 @@
 package de.muenchen.dave.services;
 
+import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
 import de.muenchen.dave.domain.elasticsearch.Zaehlung;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class SucheServiceUtils {
+public class IndexServiceUtils {
 
     public final static String WINTER = "Winter";
     public final static String FRUEHLING = "Frühling";
     public final static String SOMMER = "Sommer";
     public final static String HERBST = "Herbst";
 
+
+    public static List<String> splitStrings(String s) {
+        return Splitter.on(",").omitEmptyStrings().trimResults().splitToList(s);
+    }
+
     /**
-     * Gives you the season for a given date.
+     * Liefert den Stadbezirk Namen für die Stadbezirk Nummer.
+     *
+     * @param n
+     * @return
+     */
+    public static String leseStadtbezirk(int n) {
+        Map<Integer, String> bs = new HashMap<>();
+
+        bs.put(1, "Altstadt-Lehel");
+        bs.put(2, "Ludwigsvorstadt-Isarvorstadt");
+        bs.put(3, "Maxvorstadt");
+        bs.put(4, "Schwabing-West");
+        bs.put(5, "Au-Haidhausen");
+        bs.put(6, "Sendling");
+        bs.put(7, "Sendling-Westpark");
+        bs.put(8, "Schwanthalerhöhe");
+        bs.put(9, "Neuhausen-Nymphenburg");
+        bs.put(10, "Moosach");
+        bs.put(11, "Milbertshofen-Am Hart");
+        bs.put(12, "Schwabing-Freimann");
+        bs.put(13, "Bogenhausen");
+        bs.put(14, "Berg am Laim");
+        bs.put(15, "Trudering-Riem");
+        bs.put(16, "Ramersdorf-Perlach");
+        bs.put(17, "Obergiesing-Fasangarten");
+        bs.put(18, "Untergiesing-Harlaching");
+        bs.put(19, "Thalkirchen-Obersendling-Forstenried-Fürstenried-Solln");
+        bs.put(20, "Hadern");
+        bs.put(21, "Pasing-Obermenzing");
+        bs.put(22, "Aubing-Lochhausen-Langwied");
+        bs.put(23, "Allach-Untermenzing");
+        bs.put(24, "Feldmoching-Hasenbergl");
+        bs.put(25, "Laim");
+
+        if(bs.containsKey(n)) {
+            return bs.get(n);
+        } else {
+            log.error("No 'stadtbezirk' has been found for key '{}'.", n);
+            return "";
+        }
+    }
+
+    /**
+     * Ermittelt die Jahreszeit für ein Datum.
      *
      * @param d
      * @return
@@ -46,7 +97,7 @@ public class SucheServiceUtils {
     }
 
     /**
-     * Gives you a list with "zaehlung" years.
+     * Erstellt eine Liste von Jahren aus allen Zählungen.
      *
      * @param zs
      * @return
@@ -56,7 +107,7 @@ public class SucheServiceUtils {
     }
 
     /**
-     * Gives you the newest "zaehlung" from your list.
+     * Holt die neuste Zählung aus der Liste.
      *
      * @param zs
      * @return

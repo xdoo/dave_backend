@@ -2,7 +2,7 @@ package de.muenchen.dave.domain.elasticsearch;
 
 import com.github.javafaker.Faker;
 import com.google.common.collect.Lists;
-import de.muenchen.dave.services.SucheServiceUtils;
+import de.muenchen.dave.services.IndexServiceUtils;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -25,7 +25,7 @@ public class ZaehlungRandomFactory {
         z.setJahr(d.getYear());
         z.setMonat(d.getMonth().getDisplayName(TextStyle.FULL_STANDALONE, Locale.GERMANY));
         z.setTagesTyp(d.getDayOfWeek().getDisplayName(TextStyle.FULL_STANDALONE, Locale.GERMANY));
-        z.setJahreszeit(SucheServiceUtils.jahreszeitenDetector(d));
+        z.setJahreszeit(IndexServiceUtils.jahreszeitenDetector(d));
 
         z.setKategorien(generateKategorien());
         z.setGrund(faker.resolve("zaehlung.grund"));

@@ -19,3 +19,4 @@ test:
       art: ["Hauptverkehrsrichtung/Oberfläche/Hoch", "Querschnitt", "Querschnitt/Sonderztählung", "Querschnitt/Hauptverkehrsrichtung/Oberfläche/Hoch", "Teilknoten"]
       zeit: ["2x4h", "16h", "24h"]
       schule: ["Schule", "Schule", "Schule", "Ferien"]
+      tag: ["Wochenende", "Feiertag", "Wochentag"]

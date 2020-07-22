@@ -7,11 +7,11 @@ public class BearbeiteZaehlstelleDTO {
 
     String nummer;
     String name;
-    String stadtbezirkNummer;
+    int stadtbezirkNummer;
     double lat;
     double lng;
     String strassen;
     String geographie;
-    String suchwörter;
+    String suchwoerter;
 
 }
