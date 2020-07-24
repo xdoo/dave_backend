@@ -28,10 +28,10 @@ public class ZaehlungRandomFactory {
         z.setJahreszeit(IndexServiceUtils.jahreszeitenDetector(d));
 
         z.setKategorien(generateKategorien());
-        z.setGrund(faker.resolve("zaehlung.grund"));
+        z.setZaehlsituation(faker.resolve("zaehlung.grund"));
         z.setWetter(faker.resolve("zaehlung.wetter"));
         z.setArtDerZaehlung(faker.resolve("zaehlung.art"));
-        z.setZaehlZeit(faker.resolve("zaehlung.zeit"));
+        z.setZaehldauer(faker.resolve("zaehlung.zeit"));
         z.setSchulZeiten(faker.resolve("zaehlung.schule"));
         z.setSuchwoerter(Faker.instance().chuckNorris().fact());
 
