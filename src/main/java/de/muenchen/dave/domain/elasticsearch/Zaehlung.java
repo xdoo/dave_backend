@@ -22,6 +22,9 @@ public class Zaehlung {
 
     String monat;
 
+    /**
+     * Wochenende, Wochentag, Feiertag
+     */
     String tagesTyp;
 
     String jahreszeit;
@@ -38,15 +41,28 @@ public class Zaehlung {
 
     String zaehlsituationErweitert;
 
-    int zaehIntervall;
+    int zaehlIntervall;
 
+    /**
+     * sonnig, leicht bewölkt, stark bewölkt, regnerisch, Schnee
+     */
     String wetter;
 
+    /**
+     * TODO - hier muss geschaut werden, welche Attribute aus der Liste tatsächlich
+     * noch übrig bleiben.
+     */
     String artDerZaehlung;
 
+    /**
+     * 2x4h, 16h, 24h
+     */
     String zaehldauer;
 
-    String schulZeiten; // Ferien, Schule
+    /**
+     * Ferien, Schule
+     */
+    String schulZeiten;
 
     String suchwoerter;
 

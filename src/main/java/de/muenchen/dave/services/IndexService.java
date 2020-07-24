@@ -168,10 +168,10 @@ public class IndexService {
 
         z.setTagesTyp(zdto.getTagesTyp());
         z.setKategorien(IndexServiceUtils.splitStrings(zdto.getKategorien()));
-        z.setZaehlsituation(zdto.getGrund());
+        z.setZaehlsituation(zdto.getZaehlsituation());
         z.setWetter(zdto.getWetter());
         z.setArtDerZaehlung(zdto.getArtDerZaehlung());
-        z.setZaehldauer(zdto.getZaehlZeit());
+        z.setZaehldauer(zdto.getZaehldauer());
         z.setSchulZeiten(zdto.getSchulZeiten());
         z.setSuchwoerter(zdto.getSuchwoerter());
     }

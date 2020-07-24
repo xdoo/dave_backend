@@ -19,10 +19,10 @@ public class BearbeiteZaehlungDTORandomFactory {
         LocalDate d = date.toInstant().atZone((ZoneId.systemDefault())).toLocalDate();
 
         dto.setDatum(d);
-        dto.setGrund(faker.resolve("zaehlung.grund"));
+        dto.setZaehlsituation(faker.resolve("zaehlung.grund"));
         dto.setWetter(faker.resolve("zaehlung.wetter"));
         dto.setArtDerZaehlung(faker.resolve("zaehlung.art"));
-        dto.setZaehlZeit(faker.resolve("zaehlung.zeit"));
+        dto.setZaehldauer(faker.resolve("zaehlung.zeit"));
         dto.setSchulZeiten(faker.resolve("zaehlung.schule"));
         dto.setKategorien("KFZ, LKW, RAD");
         dto.setTagesTyp(faker.resolve("zaehlung.tag"));
