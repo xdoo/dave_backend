@@ -130,7 +130,7 @@ public class IndexService {
 
         zs.setLetzteZaehlungMonat(letzteZaehlung.getMonat());
         zs.setLetzteZaehlungMonatNummer(letzteZaehlung.getDatum().getMonthValue());
-        zs.setGrundLetzteZaehlung(letzteZaehlung.getGrund());
+        zs.setGrundLetzteZaehlung(letzteZaehlung.getZaehlsituation());
         zs.setLetzteZaehlungJahr(letzteZaehlung.getJahr());
     }
 
@@ -168,10 +168,10 @@ public class IndexService {
 
         z.setTagesTyp(zdto.getTagesTyp());
         z.setKategorien(IndexServiceUtils.splitStrings(zdto.getKategorien()));
-        z.setGrund(zdto.getGrund());
+        z.setZaehlsituation(zdto.getGrund());
         z.setWetter(zdto.getWetter());
         z.setArtDerZaehlung(zdto.getArtDerZaehlung());
-        z.setZaehlZeit(zdto.getZaehlZeit());
+        z.setZaehldauer(zdto.getZaehlZeit());
         z.setSchulZeiten(zdto.getSchulZeiten());
         z.setSuchwoerter(zdto.getSuchwoerter());
     }

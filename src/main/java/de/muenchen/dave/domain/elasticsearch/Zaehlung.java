@@ -26,18 +26,32 @@ public class Zaehlung {
 
     String jahreszeit;
 
+    String projektNummer;
+
+    String projektName;
+
+    String sonderzaehlung;
+
     List<String> kategorien;
 
-    String grund;
+    String zaehlsituation;
+
+    String zaehlsituationErweitert;
+
+    int zaehIntervall;
 
     String wetter;
 
     String artDerZaehlung;
 
-    String zaehlZeit;
+    String zaehldauer;
 
     String schulZeiten; // Ferien, Schule
 
     String suchwoerter;
+
+    List<Knotenarm> knotenarme;
+
+    List<Fahrbeziehung> fahrbeziehungen;
 
 }
