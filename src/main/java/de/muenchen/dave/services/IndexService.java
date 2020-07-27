@@ -58,13 +58,14 @@ public class IndexService {
      * Erstellt eine neue Zählstelle.
      *
      * @param zdto
-     * @param id
+     * @return
      * @throws BrokenInfrastructureException
      */
-    public void erstelleZaehlstelle(BearbeiteZaehlstelleDTO zdto, String id) throws BrokenInfrastructureException {
+    public String erstelleZaehlstelle(BearbeiteZaehlstelleDTO zdto) throws BrokenInfrastructureException {
         Zaehlstelle z = this.zaehlstelleMapper.bearbeiteDto2bean(zdto);
         z.setId(UUID.randomUUID().toString());
         this.speichereIndex(z);
+        return z.getId();
     }
 
     /**

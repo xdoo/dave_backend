@@ -1,7 +1,5 @@
 package de.muenchen.dave.services;
 
-import de.muenchen.dave.domain.dtos.BearbeiteZaehlstelleDTO;
-import de.muenchen.dave.domain.dtos.BearbeiteZaehlstelleDTORandomFactory;
 import de.muenchen.dave.domain.elasticsearch.Zaehlstelle;
 import de.muenchen.dave.domain.elasticsearch.Zaehlung;
 import org.junit.jupiter.api.Test;
