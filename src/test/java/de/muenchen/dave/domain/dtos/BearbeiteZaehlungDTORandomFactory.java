@@ -23,7 +23,7 @@ public class BearbeiteZaehlungDTORandomFactory {
         dto.setTagesTyp(faker.resolve("zaehlung.tag"));
         dto.setProjektNummer(Faker.instance().number().digits(10));
         dto.setProjektName(Faker.instance().funnyName().name());
-        dto.setSonderzaehlung(Faker.instance().bool().bool());
+        dto.setSonderzaehlung(true);
         dto.setKategorien(Lists.newArrayList("KFZ", "LKW", "RAD"));
         dto.setZaehlsituation(faker.resolve("zaehlung.grund"));
         dto.setZaehlsituationErweitert("Erweiterte Zählsituation");

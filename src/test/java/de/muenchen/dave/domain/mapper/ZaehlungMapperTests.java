@@ -43,8 +43,7 @@ public class ZaehlungMapperTests {
         assertThat(bean, hasProperty("jahreszeit", notNullValue()));
 
         // Sonderzählung mapping
-        String sz = dto.isSonderzaehlung()?ZaehlungMapper.SONDERZAEHLUNG:"";
-        assertThat(bean, hasProperty("sonderzaehlung", equalTo(sz)));
+        assertThat(bean, hasProperty("sonderzaehlung", equalTo(ZaehlungMapper.SONDERZAEHLUNG)));
 
     }
 
