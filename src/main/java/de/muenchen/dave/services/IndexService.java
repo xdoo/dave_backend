@@ -147,8 +147,8 @@ public class IndexService {
         z.setStadtbezirk(IndexServiceUtils.leseStadtbezirk(zdto.getStadtbezirkNummer()));
         z.setPunkt(new GeoPoint(zdto.getLat(), zdto.getLng()));
         z.setZaehljahre(new ArrayList<>());
-        z.setStrassen(IndexServiceUtils.splitStrings(zdto.getStrassen()));
-        z.setGeographie(IndexServiceUtils.splitStrings(zdto.getGeographie()));
+        z.setStrassen(zdto.getStrassen());
+        z.setGeographie(zdto.getGeographie());
         z.setSuchwoerter(zdto.getSuchwoerter());
         z.setZaehlungen(new ArrayList<>());
     }
