@@ -22,22 +22,45 @@ public class Zaehlung {
 
     String monat;
 
-    String tagesTyp;
-
     String jahreszeit;
 
+    /**
+     * Wochenende, Wochentag, Feiertag
+     */
+    String tagesTyp;
+    String projektNummer;
+    String projektName;
+    String sonderzaehlung;
     List<String> kategorien;
+    String zaehlsituation;
+    String zaehlsituationErweitert;
+    int zaehlIntervall;
 
-    String grund;
-
+    /**
+     * sonnig, leicht bewölkt, stark bewölkt, regnerisch, Schnee
+     */
     String wetter;
 
+    /**
+     * TODO - hier muss geschaut werden, welche Attribute aus der Liste tatsächlich
+     * noch übrig bleiben.
+     */
     String artDerZaehlung;
 
-    String zaehlZeit;
+    /**
+     * 2x4h, 16h, 24h
+     */
+    String zaehldauer;
 
-    String schulZeiten; // Ferien, Schule
+    /**
+     * Ferien, Schule
+     */
+    String schulZeiten;
 
     String suchwoerter;
+
+    List<Knotenarm> knotenarme;
+
+    List<Fahrbeziehung> fahrbeziehungen;
 
 }

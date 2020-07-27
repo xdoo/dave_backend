@@ -55,7 +55,7 @@ public class ZaehlstelleRandomFactory {
 
         z.setLetzteZaehlungMonat(zl1.getMonat());
         z.setLetzteZaehlungMonatNummer(zl1.getDatum().getMonthValue());
-        z.setGrundLetzteZaehlung(zl1.getGrund());
+        z.setGrundLetzteZaehlung(zl1.getZaehlsituation());
         z.setLetzteZaehlungJahr(zl1.getJahr());
 
         z.setZaehljahre(IndexServiceUtils.getZaehljahre(zls));

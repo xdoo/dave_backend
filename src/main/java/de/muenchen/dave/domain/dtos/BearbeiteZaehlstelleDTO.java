@@ -2,6 +2,8 @@ package de.muenchen.dave.domain.dtos;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class BearbeiteZaehlstelleDTO {
 
@@ -10,8 +12,8 @@ public class BearbeiteZaehlstelleDTO {
     int stadtbezirkNummer;
     double lat;
     double lng;
-    String strassen;
-    String geographie;
+    List<String> strassen;
+    List<String> geographie;
     String suchwoerter;
 
 }

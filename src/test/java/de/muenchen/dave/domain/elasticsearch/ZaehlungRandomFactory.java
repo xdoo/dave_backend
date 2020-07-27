@@ -2,6 +2,7 @@ package de.muenchen.dave.domain.elasticsearch;
 
 import com.github.javafaker.Faker;
 import com.google.common.collect.Lists;
+import de.muenchen.dave.domain.mapper.ZaehlungMapper;
 import de.muenchen.dave.services.IndexServiceUtils;
 
 import java.time.LocalDate;
@@ -20,20 +21,25 @@ public class ZaehlungRandomFactory {
         Date date = Faker.instance().date().between(new GregorianCalendar(1990, 0, 1).getTime(), new Date());
         LocalDate d = date.toInstant().atZone((ZoneId.systemDefault())).toLocalDate();
 
-        z.setId(Faker.instance().crypto().md5());
+        z.setId(UUID.randomUUID().toString());
         z.setDatum(d);
         z.setJahr(d.getYear());
         z.setMonat(d.getMonth().getDisplayName(TextStyle.FULL_STANDALONE, Locale.GERMANY));
         z.setTagesTyp(d.getDayOfWeek().getDisplayName(TextStyle.FULL_STANDALONE, Locale.GERMANY));
         z.setJahreszeit(IndexServiceUtils.jahreszeitenDetector(d));
 
+        z.setProjektNummer(Faker.instance().number().digits(10));
+        z.setProjektName(Faker.instance().funnyName().name());
+        z.setSonderzaehlung(ZaehlungMapper.SONDERZAEHLUNG);
         z.setKategorien(generateKategorien());
-        z.setGrund(faker.resolve("zaehlung.grund"));
+        z.setZaehlsituation(faker.resolve("zaehlung.grund"));
+        z.setZaehlsituationErweitert("Die erweiterte Zählsituation");
+        z.setZaehlIntervall(15);
         z.setWetter(faker.resolve("zaehlung.wetter"));
         z.setArtDerZaehlung(faker.resolve("zaehlung.art"));
-        z.setZaehlZeit(faker.resolve("zaehlung.zeit"));
+        z.setZaehldauer(faker.resolve("zaehlung.zeit"));
         z.setSchulZeiten(faker.resolve("zaehlung.schule"));
-        z.setSuchwoerter(Faker.instance().chuckNorris().fact());
+        z.setSuchwoerter("foo bar foobar");
 
         return z;
     }

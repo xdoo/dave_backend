@@ -3,6 +3,7 @@ package de.muenchen.dave.domain.dtos;
 import com.github.javafaker.Faker;
 import com.github.javafaker.service.FakeValuesService;
 import com.github.javafaker.service.RandomService;
+import com.google.common.collect.Lists;
 import com.google.common.primitives.Doubles;
 import com.google.common.primitives.Ints;
 
@@ -32,8 +33,8 @@ public class BearbeiteZaehlstelleDTORandomFactory {
         dto.setStadtbezirkNummer(Ints.tryParse(x.get(BEZIRKNUMMER)));
         dto.setLat(Doubles.tryParse(x.get(LAT)));
         dto.setLng(Doubles.tryParse(x.get(LNG)));
-        dto.setStrassen(x.get(STRASSEN));
-        dto.setGeographie(x.get(GEO));
+        dto.setStrassen(Lists.newArrayList(x.get(STRASSEN)));
+        dto.setGeographie(Lists.newArrayList(x.get(GEO)));
         dto.setSuchwoerter(Faker.instance().animal().name());
 
         return dto;
