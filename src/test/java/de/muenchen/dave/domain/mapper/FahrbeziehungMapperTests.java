@@ -14,15 +14,15 @@ import static org.hamcrest.Matchers.*;
 
 @SpringBootTest
 @Slf4j
-public class FahrbeziehungKreuzungAndBearbeiteFahrbeziehungKreuzungMapperTests {
+public class FahrbeziehungMapperTests {
 
     @Autowired
-    FahrbeziehungKreuzungAndBearbeiteFahrbeziehungKreuzungMapper mapper;
+    FahrbeziehungMapper mapper;
 
     @Test
     public void testDto2bean() {
         BearbeiteFahrbeziehungKreuzungDTO dto = BearbeiteFahrbeziehungKreuzungDTORandomFactory.getOne();
-        FahrbeziehungKreuzung bean = this.mapper.dto2bean(dto);
+        FahrbeziehungKreuzung bean = this.mapper.bearbeiteFahrbeziehungKreuzungdto2bean(dto);
 
         assertThat(bean.getVon(), is(equalTo(dto.getVon())));
         assertThat(bean.getNach(), is(equalTo(dto.getNach())));
@@ -32,7 +32,7 @@ public class FahrbeziehungKreuzungAndBearbeiteFahrbeziehungKreuzungMapperTests {
     @Test
     public void testBean2dto() {
         FahrbeziehungKreuzung bean = FahrbeziehungKreuzungRandomFactory.getOne();
-        BearbeiteFahrbeziehungKreuzungDTO dto = this.mapper.bean2dto(bean);
+        BearbeiteFahrbeziehungKreuzungDTO dto = this.mapper.bean2bearbeiteFahrbeziehungKreuzungDto(bean);
 
         assertThat(dto.getVon(), is(equalTo(bean.getVon())));
         assertThat(dto.getNach(), is(equalTo(bean.getNach())));

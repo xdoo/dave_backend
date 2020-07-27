@@ -23,7 +23,7 @@ public class ZaehlstelleMapperTests {
     @Test
     public void testDto2bean() {
         BearbeiteZaehlstelleDTO dto = BearbeiteZaehlstelleDTORandomFactory.getOne();
-        Zaehlstelle bean = this.mapper.dto2bean(dto);
+        Zaehlstelle bean = this.mapper.bearbeiteDto2bean(dto);
 
         assertThat(bean, hasProperty("nummer", equalTo(dto.getNummer())));
         assertThat(bean, hasProperty("name", equalTo(dto.getName())));
@@ -40,7 +40,7 @@ public class ZaehlstelleMapperTests {
     @Test
     public void testBean2Dto() {
         Zaehlstelle bean = ZaehlstelleRandomFactory.getOne();
-        BearbeiteZaehlstelleDTO dto = this.mapper.bean2dto(bean);
+        BearbeiteZaehlstelleDTO dto = this.mapper.BearbeiteDto(bean);
 
         assertThat(dto, hasProperty("nummer", equalTo(bean.getNummer())));
         assertThat(dto, hasProperty("name", equalTo(bean.getName())));

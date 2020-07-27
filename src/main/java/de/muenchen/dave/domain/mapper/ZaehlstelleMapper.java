@@ -8,8 +8,21 @@ import org.springframework.data.elasticsearch.core.geo.GeoPoint;
 @Mapper(componentModel = "spring")
 public interface ZaehlstelleMapper {
 
-    BearbeiteZaehlstelleDTO bean2dto(Zaehlstelle bean);
-    Zaehlstelle dto2bean(BearbeiteZaehlstelleDTO dto);
+    /**
+     * bean auf bearbeiten
+     *
+     * @param bean
+     * @return
+     */
+    BearbeiteZaehlstelleDTO BearbeiteDto(Zaehlstelle bean);
+
+    /**
+     * bearbeiten auf bean
+     *
+     * @param dto
+     * @return
+     */
+    Zaehlstelle bearbeiteDto2bean(BearbeiteZaehlstelleDTO dto);
 
     @AfterMapping
     default void toZaehlstelle(@MappingTarget Zaehlstelle z, BearbeiteZaehlstelleDTO dto) {

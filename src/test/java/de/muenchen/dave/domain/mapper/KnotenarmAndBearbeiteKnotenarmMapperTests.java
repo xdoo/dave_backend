@@ -16,12 +16,13 @@ import static org.hamcrest.Matchers.*;
 @Slf4j
 public class KnotenarmAndBearbeiteKnotenarmMapperTests {
 
-    @Autowired KnotenarmAndBearbeiteKnotenarmMapper mapper;
+    @Autowired
+    KnotenarmMapper mapper;
 
     @Test
     public void testDto2bean() {
         BearbeiteKnotenarmDTO dto = BearbeiteKnotenarmDTORandomFactory.getOne();
-        Knotenarm bean = this.mapper.dto2bean(dto);
+        Knotenarm bean = this.mapper.bearbeitenDto2bean(dto);
 
         assertThat(bean, hasProperty("nummer", equalTo(dto.getNummer())));
         assertThat(bean, hasProperty("strassenname", equalTo(dto.getStrassenname())));
@@ -30,7 +31,7 @@ public class KnotenarmAndBearbeiteKnotenarmMapperTests {
     @Test
     public void testBean2dto() {
         Knotenarm bean = KnotenarmRandomFactory.getOne();
-        BearbeiteKnotenarmDTO dto = this.mapper.bean2dto(bean);
+        BearbeiteKnotenarmDTO dto = this.mapper.bean2bearbeitenDto(bean);
 
         assertThat(dto, hasProperty("nummer", equalTo(bean.getNummer())));
         assertThat(dto, hasProperty("strassenname", equalTo(bean.getStrassenname())));

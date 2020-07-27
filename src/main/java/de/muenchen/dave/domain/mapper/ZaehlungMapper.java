@@ -14,7 +14,8 @@ import java.util.Locale;
 public interface ZaehlungMapper {
 
     /**
-     * berabeiten auf bean
+     * bearbeiten auf bean
+     *
      * @param dto
      * @return
      */

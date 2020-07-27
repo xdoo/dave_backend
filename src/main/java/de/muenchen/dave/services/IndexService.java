@@ -62,7 +62,7 @@ public class IndexService {
      * @throws BrokenInfrastructureException
      */
     public void erstelleZaehlstelle(BearbeiteZaehlstelleDTO zdto, String id) throws BrokenInfrastructureException {
-        Zaehlstelle z = this.zaehlstelleMapper.dto2bean(zdto);
+        Zaehlstelle z = this.zaehlstelleMapper.bearbeiteDto2bean(zdto);
         z.setId(id);
         this.speichereIndex(z);
     }
@@ -78,7 +78,7 @@ public class IndexService {
     public void erneuereZaehlstelle(BearbeiteZaehlstelleDTO zdto, String id) throws ResourceNotFoundException, BrokenInfrastructureException {
         Optional<Zaehlstelle> zsto = this.index.findById(id);
         if(zsto.isPresent()) {
-            Zaehlstelle z = this.zaehlstelleMapper.dto2bean(zdto);
+            Zaehlstelle z = this.zaehlstelleMapper.bearbeiteDto2bean(zdto);
             z.setId(id);
             this.speichereIndex(z);
         } else {

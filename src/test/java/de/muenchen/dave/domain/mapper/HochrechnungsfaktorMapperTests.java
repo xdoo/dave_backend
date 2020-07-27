@@ -14,14 +14,15 @@ import static org.hamcrest.Matchers.*;
 
 @SpringBootTest
 @Slf4j
-public class HochrechnungsfaktorAndBearbeiteHochrechnungsfaktorMapperTests {
+public class HochrechnungsfaktorMapperTests {
 
-    @Autowired HochrechnungsfaktorAndBearbeiteHochrechnungsfaktorMapper mapper;
+    @Autowired
+    HochrechnungsfaktorMapper mapper;
 
     @Test
     public void testBean2dto() {
         Hochrechnungsfaktor bean = HochrechnungsfaktorRandomFactory.getOne();
-        BearbeiteHochrechnungsfaktorDTO dto = this.mapper.bean2dto(bean);
+        BearbeiteHochrechnungsfaktorDTO dto = this.mapper.bean2bearbeiteDto(bean);
 
         assertThat(dto, hasProperty("kfz", equalTo(bean.getKfz())));
         assertThat(dto, hasProperty("sv", equalTo(bean.getSv())));
@@ -31,7 +32,7 @@ public class HochrechnungsfaktorAndBearbeiteHochrechnungsfaktorMapperTests {
     @Test
     public void testDto2bean() {
         BearbeiteHochrechnungsfaktorDTO dto = BearbeiteHochrechnungsfaktorDTORandomFactory.getOne();
-        Hochrechnungsfaktor bean = this.mapper.dto2bean(dto);
+        Hochrechnungsfaktor bean = this.mapper.bearbeiteDto2bean(dto);
 
         assertThat(bean, hasProperty("kfz", equalTo(dto.getKfz())));
         assertThat(bean, hasProperty("sv", equalTo(dto.getSv())));
