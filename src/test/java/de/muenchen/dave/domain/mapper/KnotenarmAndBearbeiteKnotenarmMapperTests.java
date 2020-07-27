@@ -3,6 +3,7 @@ package de.muenchen.dave.domain.mapper;
 import de.muenchen.dave.domain.dtos.BearbeiteKnotenarmDTO;
 import de.muenchen.dave.domain.dtos.BearbeiteKnotenarmDTORandomFactory;
 import de.muenchen.dave.domain.elasticsearch.Knotenarm;
+import de.muenchen.dave.domain.elasticsearch.KnotenarmRandomFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,10 @@ public class KnotenarmAndBearbeiteKnotenarmMapperTests {
 
     @Test
     public void testBean2dto() {
+        Knotenarm bean = KnotenarmRandomFactory.getOne();
+        BearbeiteKnotenarmDTO dto = this.mapper.bean2dto(bean);
 
+        assertThat(dto, hasProperty("nummer", equalTo(bean.getNummer())));
+        assertThat(dto, hasProperty("strassenname", equalTo(bean.getStrassenname())));
     }
 }
