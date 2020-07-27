@@ -3,7 +3,6 @@ package de.muenchen.dave.domain.mapper;
 import de.muenchen.dave.domain.dtos.BearbeiteZaehlstelleDTO;
 import de.muenchen.dave.domain.elasticsearch.Zaehlstelle;
 import org.mapstruct.*;
-import org.springframework.data.elasticsearch.core.geo.GeoPoint;
 
 @Mapper(componentModel = "spring")
 public interface ZaehlstelleAndBearbeiteZaehlstelleMapper {
@@ -13,13 +12,12 @@ public interface ZaehlstelleAndBearbeiteZaehlstelleMapper {
 
     @AfterMapping
     default void setPunkt(@MappingTarget Zaehlstelle z, BearbeiteZaehlstelleDTO dto) {
-        z.setPunkt(new GeoPoint(dto.getLat(), dto.getLng()));
+        ZaehlstelleMappingUtil.setPunkt(z,dto);
     }
 
     @AfterMapping
     default  void setLatLng(@MappingTarget BearbeiteZaehlstelleDTO dto, Zaehlstelle z) {
-        dto.setLat(z.getPunkt().getLat());
-        dto.setLng(z.getPunkt().getLon());
+        ZaehlstelleMappingUtil.setLatLng(dto, z);
     }
 
 }
