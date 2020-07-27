@@ -63,12 +63,14 @@ public class IndexService {
      */
     public void erstelleZaehlstelle(BearbeiteZaehlstelleDTO zdto, String id) throws BrokenInfrastructureException {
         Zaehlstelle z = this.zaehlstelleMapper.bearbeiteDto2bean(zdto);
-        z.setId(id);
+        z.setId(UUID.randomUUID().toString());
         this.speichereIndex(z);
     }
 
     /**
-     * Speichert die Daten zur Zählstelle, wenn diese erneuert wurden.
+     * Speichert die Daten zur Zählstelle, wenn diese erneuert wurden. Es wird erwartet,
+     * dass immer alle Werte zur Zählung übergeben werden, auch welche, die nicht verändert
+     * wurden. Werden diese nicht übergebn, so entstehen (ungewollt) leere Attribute.
      *
      * @param zdto
      * @param id
@@ -79,7 +81,12 @@ public class IndexService {
         Optional<Zaehlstelle> zsto = this.index.findById(id);
         if(zsto.isPresent()) {
             Zaehlstelle z = this.zaehlstelleMapper.bearbeiteDto2bean(zdto);
+
+            // ID muss erhalten bleiben
             z.setId(id);
+            // Die Zählungen müssen erhalten bleiben
+            z.setZaehlungen(zsto.get().getZaehlungen());
+
             this.speichereIndex(z);
         } else {
             log.error("Keine Zählstelle zur id {} gefunden.", id);
