@@ -14,9 +14,10 @@ import static org.hamcrest.Matchers.*;
 
 @SpringBootTest
 @Slf4j
-public class FahrbeziehungKreuzung2BearbeiteFahrbeziehungKreuzungDTOTests {
+public class FahrbeziehungKreuzungAndBearbeiteFahrbeziehungKreuzungMapperTests {
 
-    @Autowired FahrbeziehungKreuzung2BearbeiteFahrbeziehungKreuzungDTO mapper;
+    @Autowired
+    FahrbeziehungKreuzungAndBearbeiteFahrbeziehungKreuzungMapper mapper;
 
     @Test
     public void testDto2bean() {
