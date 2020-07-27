@@ -14,27 +14,7 @@ import static org.hamcrest.Matchers.*;
 
 public class IndexServiceTest {
 
-    private IndexService service = new IndexService(null);
-
-    @Test
-    public void testMapZaehlstelleDtoToBean() {
-
-        BearbeiteZaehlstelleDTO dto = BearbeiteZaehlstelleDTORandomFactory.getOne();
-        Zaehlstelle z = new Zaehlstelle();
-
-        this.service.mapZaehlstelleDtoToBean(dto, z);
-
-        assertThat(z.getNummer(), is(equalTo(dto.getNummer())));
-        assertThat(z.getName(), is(equalTo(dto.getName())));
-        assertThat(z.getStadtbezirkNummer(), is(equalTo(dto.getStadtbezirkNummer())));
-        assertThat(z.getStadtbezirk(), is(equalTo(IndexServiceUtils.leseStadtbezirk(z.getStadtbezirkNummer()))));
-        assertThat(z.getPunkt(), is(notNullValue()));
-        assertThat(z.getZaehljahre(), emptyIterable());
-        assertThat(z.getStrassen().isEmpty(), is(false));
-        assertThat(z.getGeographie().isEmpty(), is(notNullValue()));
-        assertThat(z.getSuchwoerter(), is(equalTo(dto.getSuchwoerter())));
-        assertThat(z.getZaehlungen(), emptyIterable());
-    }
+    private IndexService service = new IndexService(null, null, null);
 
     @Test
     public void testUpdateZaehlstelleWithZaehlung() {

@@ -33,7 +33,7 @@ public class ZaehlungRandomFactory {
         z.setArtDerZaehlung(faker.resolve("zaehlung.art"));
         z.setZaehldauer(faker.resolve("zaehlung.zeit"));
         z.setSchulZeiten(faker.resolve("zaehlung.schule"));
-        z.setSuchwoerter(Faker.instance().chuckNorris().fact());
+        z.setSuchwoerter("foo bar foobar");
 
         return z;
     }

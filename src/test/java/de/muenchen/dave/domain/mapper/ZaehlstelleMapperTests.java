@@ -15,9 +15,10 @@ import static org.hamcrest.Matchers.*;
 
 @SpringBootTest
 @Slf4j
-public class ZaehlstelleAndBearbeiteZaehlstelleMapperTests {
+public class ZaehlstelleMapperTests {
 
-    @Autowired ZaehlstelleAndBearbeiteZaehlstelleMapper mapper;
+    @Autowired
+    ZaehlstelleMapper mapper;
 
     @Test
     public void testDto2bean() {

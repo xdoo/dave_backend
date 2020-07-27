@@ -1,6 +1,7 @@
 package de.muenchen.dave.domain.dtos;
 
 import com.github.javafaker.Faker;
+import com.google.common.collect.Lists;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -24,7 +25,7 @@ public class BearbeiteZaehlungDTORandomFactory {
         dto.setArtDerZaehlung(faker.resolve("zaehlung.art"));
         dto.setZaehldauer(faker.resolve("zaehlung.zeit"));
         dto.setSchulZeiten(faker.resolve("zaehlung.schule"));
-        dto.setKategorien("KFZ, LKW, RAD");
+        dto.setKategorien(Lists.newArrayList("KFZ", "LKW", "RAD"));
         dto.setTagesTyp(faker.resolve("zaehlung.tag"));
         dto.setSuchwoerter("Test, Foo, Bar");
 

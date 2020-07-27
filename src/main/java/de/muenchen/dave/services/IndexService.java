@@ -1,5 +1,7 @@
 package de.muenchen.dave.services;
 
+import de.muenchen.dave.domain.mapper.ZaehlstelleMapper;
+import de.muenchen.dave.domain.mapper.ZaehlungMapper;
 import de.muenchen.dave.exceptions.BrokenInfrastructureException;
 import de.muenchen.dave.exceptions.ResourceNotFoundException;
 import de.muenchen.dave.domain.dtos.BearbeiteZaehlstelleDTO;
@@ -10,13 +12,10 @@ import de.muenchen.dave.repositories.elasticsearch.ZaehlstelleIndex;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessResourceFailureException;
-import org.springframework.data.elasticsearch.core.geo.GeoPoint;
 import org.springframework.stereotype.Service;
 
-import java.time.format.TextStyle;
-import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @Slf4j
@@ -29,9 +28,13 @@ public class IndexService {
     private String elasticsearchPort;
 
     private final ZaehlstelleIndex index;
+    private final ZaehlungMapper zaehlungMapper;
+    private final ZaehlstelleMapper zaehlstelleMapper;
 
-    public IndexService(ZaehlstelleIndex index) {
+    public IndexService(ZaehlstelleIndex index, ZaehlungMapper zaehlungMapper, ZaehlstelleMapper zaehlstelleMapper) {
         this.index = index;
+        this.zaehlungMapper = zaehlungMapper;
+        this.zaehlstelleMapper = zaehlstelleMapper;
     }
 
     /**
@@ -59,12 +62,9 @@ public class IndexService {
      * @throws BrokenInfrastructureException
      */
     public void erstelleZaehlstelle(BearbeiteZaehlstelleDTO zdto, String id) throws BrokenInfrastructureException {
-        Zaehlstelle z = new Zaehlstelle();
-        
+        Zaehlstelle z = this.zaehlstelleMapper.dto2bean(zdto);
         z.setId(id);
-        this.mapZaehlstelleDtoToBean(zdto, z);
         this.speichereIndex(z);
-
     }
 
     /**
@@ -78,8 +78,8 @@ public class IndexService {
     public void erneuereZaehlstelle(BearbeiteZaehlstelleDTO zdto, String id) throws ResourceNotFoundException, BrokenInfrastructureException {
         Optional<Zaehlstelle> zsto = this.index.findById(id);
         if(zsto.isPresent()) {
-            Zaehlstelle z = zsto.get();
-            this.mapZaehlstelleDtoToBean(zdto, z);
+            Zaehlstelle z = this.zaehlstelleMapper.dto2bean(zdto);
+            z.setId(id);
             this.speichereIndex(z);
         } else {
             log.error("Keine Zählstelle zur id {} gefunden.", id);
@@ -98,10 +98,8 @@ public class IndexService {
      * @throws BrokenInfrastructureException
      */
     public void erstelleZaehlung(BearbeiteZaehlungDTO zdto, String zaehlungId, String zaehlstelleId) throws ResourceNotFoundException, BrokenInfrastructureException {
-        Zaehlung z = new Zaehlung();
-
-        z.setId(zaehlungId);
-        this.mapZaehlungDtoToBean(zdto, z);
+        Zaehlung z = this.zaehlungMapper.bearbeiteDto2bean(zdto);
+        z.setId(UUID.randomUUID().toString());
 
         // Zählstelle erneuern
         Optional<Zaehlstelle> zsto = this.index.findById(zaehlstelleId);
@@ -132,48 +130,6 @@ public class IndexService {
         zs.setLetzteZaehlungMonatNummer(letzteZaehlung.getDatum().getMonthValue());
         zs.setGrundLetzteZaehlung(letzteZaehlung.getZaehlsituation());
         zs.setLetzteZaehlungJahr(letzteZaehlung.getJahr());
-    }
-
-    /**
-     * Mappt die Felder vom DTO auf das Zählstellen Objekt.
-     *
-     * @param zdto
-     * @param z
-     */
-    public void mapZaehlstelleDtoToBean(BearbeiteZaehlstelleDTO zdto, Zaehlstelle z) {
-        z.setNummer(zdto.getNummer());
-        z.setName(zdto.getName());
-        z.setStadtbezirkNummer(zdto.getStadtbezirkNummer());
-        z.setStadtbezirk(IndexServiceUtils.leseStadtbezirk(zdto.getStadtbezirkNummer()));
-        z.setPunkt(new GeoPoint(zdto.getLat(), zdto.getLng()));
-        z.setZaehljahre(new ArrayList<>());
-        z.setStrassen(zdto.getStrassen());
-        z.setGeographie(zdto.getGeographie());
-        z.setSuchwoerter(zdto.getSuchwoerter());
-        z.setZaehlungen(new ArrayList<>());
-    }
-
-    /**
-     * Mappt die Felder vom DTO auf das Zählungs Objekt.
-     *
-     * @param zdto
-     * @param z
-     */
-    public void mapZaehlungDtoToBean(BearbeiteZaehlungDTO zdto, Zaehlung z) {
-        // date stuff
-        z.setDatum(zdto.getDatum());
-        z.setJahr(zdto.getDatum().getYear());
-        z.setMonat(zdto.getDatum().getMonth().getDisplayName(TextStyle.FULL, Locale.GERMANY));
-        z.setJahreszeit(IndexServiceUtils.jahreszeitenDetector(zdto.getDatum()));
-
-        z.setTagesTyp(zdto.getTagesTyp());
-        z.setKategorien(IndexServiceUtils.splitStrings(zdto.getKategorien()));
-        z.setZaehlsituation(zdto.getZaehlsituation());
-        z.setWetter(zdto.getWetter());
-        z.setArtDerZaehlung(zdto.getArtDerZaehlung());
-        z.setZaehldauer(zdto.getZaehldauer());
-        z.setSchulZeiten(zdto.getSchulZeiten());
-        z.setSuchwoerter(zdto.getSuchwoerter());
     }
 
 

@@ -22,25 +22,18 @@ public class Zaehlung {
 
     String monat;
 
+    String jahreszeit;
+
     /**
      * Wochenende, Wochentag, Feiertag
      */
     String tagesTyp;
-
-    String jahreszeit;
-
     String projektNummer;
-
     String projektName;
-
     String sonderzaehlung;
-
     List<String> kategorien;
-
     String zaehlsituation;
-
     String zaehlsituationErweitert;
-
     int zaehlIntervall;
 
     /**

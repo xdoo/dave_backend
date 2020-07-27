@@ -13,10 +13,10 @@ public class BearbeiteZaehlungDTO {
     String projektNummer;
     String projektName;
     boolean sonderzaehlung;
-    String kategorien;
+    List<String> kategorien;
     String zaehlsituation;
     String zaehlsituationErweitert;
-    String zaehlIntervall;
+    int zaehlIntervall;
     String wetter;
     String artDerZaehlung;
     String zaehldauer;
