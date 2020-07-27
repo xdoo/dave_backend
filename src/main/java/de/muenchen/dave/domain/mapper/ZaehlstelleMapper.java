@@ -25,14 +25,14 @@ public interface ZaehlstelleMapper {
     Zaehlstelle bearbeiteDto2bean(BearbeiteZaehlstelleDTO dto);
 
     @AfterMapping
-    default void toZaehlstelle(@MappingTarget Zaehlstelle z, BearbeiteZaehlstelleDTO dto) {
-        z.setPunkt(new GeoPoint(dto.getLat(), dto.getLng()));
+    default void toZaehlstelle(@MappingTarget Zaehlstelle bean, BearbeiteZaehlstelleDTO dto) {
+        bean.setPunkt(new GeoPoint(dto.getLat(), dto.getLng()));
     }
 
     @AfterMapping
-    default  void toBearbeiteZaehlstelleDTO(@MappingTarget BearbeiteZaehlstelleDTO dto, Zaehlstelle z) {
-        dto.setLat(z.getPunkt().getLat());
-        dto.setLng(z.getPunkt().getLon());
+    default  void toBearbeiteZaehlstelleDTO(@MappingTarget BearbeiteZaehlstelleDTO dto, Zaehlstelle bean) {
+        dto.setLat(bean.getPunkt().getLat());
+        dto.setLng(bean.getPunkt().getLon());
     }
 
 }

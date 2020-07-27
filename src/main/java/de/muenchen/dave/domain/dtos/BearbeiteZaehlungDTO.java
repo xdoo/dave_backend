@@ -1,5 +1,6 @@
 package de.muenchen.dave.domain.dtos;
 
+import de.muenchen.dave.domain.elasticsearch.Fahrbeziehung;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -22,6 +23,6 @@ public class BearbeiteZaehlungDTO {
     String zaehldauer;
     String schulZeiten;
     String suchwoerter;
-    List<BearbeiteKnotenarmDTO> knotenarme;
-
+//    List<BearbeiteKnotenarmDTO> knotenarme;
+//    List<BearbeiteFahrbeziehungDTO> fahrbeziehungen;
 }

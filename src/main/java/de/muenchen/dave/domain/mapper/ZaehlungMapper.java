@@ -13,6 +13,8 @@ import java.util.Locale;
 @Mapper(componentModel = "spring")
 public interface ZaehlungMapper {
 
+    public final static String SONDERZAEHLUNG = "Sonderzählung";
+
     /**
      * bearbeiten auf bean
      *
@@ -30,10 +32,21 @@ public interface ZaehlungMapper {
     public BearbeiteZaehlungDTO bean2BearbeiteDto(Zaehlung bean);
 
     @AfterMapping
-    default void calculateValuesForZaehlung(@MappingTarget Zaehlung z, BearbeiteZaehlungDTO dto) {
-        z.setJahr(dto.getDatum().getYear());
-        z.setMonat(dto.getDatum().getMonth().getDisplayName(TextStyle.FULL, Locale.GERMANY));
-        z.setJahreszeit(IndexServiceUtils.jahreszeitenDetector(dto.getDatum()));
+    default void toZaehlung(@MappingTarget Zaehlung bean, BearbeiteZaehlungDTO dto) {
+        bean.setJahr(dto.getDatum().getYear());
+        bean.setMonat(dto.getDatum().getMonth().getDisplayName(TextStyle.FULL, Locale.GERMANY));
+        bean.setJahreszeit(IndexServiceUtils.jahreszeitenDetector(dto.getDatum()));
+
+        if(dto.isSonderzaehlung()){
+            bean.setSonderzaehlung(SONDERZAEHLUNG);
+        }
+    }
+
+    @AfterMapping
+    default void toBearbeiteZaehlungDTO(@MappingTarget BearbeiteZaehlungDTO dto, Zaehlung bean) {
+        if(bean.getSonderzaehlung().equals(SONDERZAEHLUNG)) {
+            dto.setSonderzaehlung(true);
+        }
     }
 
 }

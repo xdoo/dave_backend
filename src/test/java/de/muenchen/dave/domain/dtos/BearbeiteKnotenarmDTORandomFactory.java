@@ -2,6 +2,9 @@ package de.muenchen.dave.domain.dtos;
 
 import com.github.javafaker.Faker;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BearbeiteKnotenarmDTORandomFactory {
 
     public static  BearbeiteKnotenarmDTO getOne() {
@@ -11,5 +14,15 @@ public class BearbeiteKnotenarmDTORandomFactory {
         dto.setStrassenname("Teststrasse_" + dto.getNummer());
 
         return dto;
+    }
+
+    public static List<BearbeiteKnotenarmDTO> getSome() {
+        List<BearbeiteKnotenarmDTO> l = new ArrayList<>();
+
+        int x = Faker.instance().number().numberBetween(1, 8);
+        for(int i = 0; i < x; i++) {
+            l.add(getOne());
+        }
+        return l;
     }
 }
