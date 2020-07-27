@@ -23,6 +23,6 @@ public class BearbeiteZaehlungDTO {
     String zaehldauer;
     String schulZeiten;
     String suchwoerter;
-//    List<BearbeiteKnotenarmDTO> knotenarme;
-//    List<BearbeiteFahrbeziehungDTO> fahrbeziehungen;
+    List<BearbeiteKnotenarmDTO> knotenarme;
+    List<BearbeiteFahrbeziehungDTO> fahrbeziehungen;
 }
