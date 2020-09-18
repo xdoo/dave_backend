@@ -10,6 +10,7 @@ import com.google.common.primitives.Ints;
 import de.muenchen.dave.services.IndexServiceUtils;
 import org.springframework.data.elasticsearch.core.geo.GeoPoint;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -61,6 +62,19 @@ public class ZaehlstelleRandomFactory {
         z.setZaehljahre(IndexServiceUtils.getZaehljahre(zls));
 
         return z;
+    }
+
+    public static List<Zaehlstelle> getSome(int some) {
+        List<Zaehlstelle> zs = new ArrayList<>();
+
+        for(int i = 0; i < some; i++) {
+            zs.add(getOne());
+        }
+        return zs;
+    }
+
+    public static List<Zaehlstelle> getSomeRandom() {
+        return getSome(Faker.instance().number().numberBetween(1, 10));
     }
 
 }

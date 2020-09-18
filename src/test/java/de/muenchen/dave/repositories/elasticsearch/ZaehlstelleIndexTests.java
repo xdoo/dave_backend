@@ -58,4 +58,18 @@ public class ZaehlstelleIndexTests {
         this.repo.deleteById(id);
         assertThat(this.repo.existsById(id), is(false));
     }
+
+    @Test
+    public void createData() {
+        log.info("clear repo");
+        this.repo.deleteAll();
+
+        for (int i = 0; i < 50; i++) {
+            log.info("create 100 entries");
+            List<Zaehlstelle> some = ZaehlstelleRandomFactory.getSome(100);
+            log.info("save 100 entries");
+            this.repo.saveAll(some);
+            log.info("saved entries -> " + this.repo.count());
+        }
+    }
 }
