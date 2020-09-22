@@ -8,6 +8,6 @@ import java.util.List;
 public class SucheComplexSuggestsDTO {
 
     List<SucheWordSuggestDTO> wordVorschlaege;
-    List<SucheCounterSuggestDTO> zaehlstellenVorschlaege;
-    List<SucheCountSuggestDTO> zaehlungenVorschlaege;
+    List<SucheZaehlstelleSuggestDTO> zaehlstellenVorschlaege;
+    List<SucheZaehlungSuggestDTO> zaehlungenVorschlaege;
 }

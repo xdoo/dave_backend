@@ -1,7 +1,7 @@
 package de.muenchen.dave.domain.mapper;
 
 import de.muenchen.dave.domain.dtos.BearbeiteZaehlstelleDTO;
-import de.muenchen.dave.domain.dtos.SucheCounterSuggestDTO;
+import de.muenchen.dave.domain.dtos.SucheZaehlstelleSuggestDTO;
 import de.muenchen.dave.domain.elasticsearch.Zaehlstelle;
 import org.mapstruct.*;
 import org.springframework.data.elasticsearch.core.geo.GeoPoint;
@@ -36,7 +36,17 @@ public interface ZaehlstelleMapper {
         dto.setLng(bean.getPunkt().getLon());
     }
 
-    @Mapping(source = "name", target = "text")
-    SucheCounterSuggestDTO sucheCounterSuggestDto(Zaehlstelle bean);
+    /**
+     * bean auf counterSuggestDto
+     *
+     * @param bean
+     * @return
+     */
+    SucheZaehlstelleSuggestDTO bean2SucheCounterSuggestDto(Zaehlstelle bean);
+
+    @AfterMapping
+    default void toSucheCounterSuggestDto(@MappingTarget SucheZaehlstelleSuggestDTO dto, Zaehlstelle bean) {
+        dto.setText(bean.getNummer() + " " + bean.getName());
+    }
 
 }

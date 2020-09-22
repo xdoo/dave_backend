@@ -15,7 +15,7 @@ import static org.hamcrest.Matchers.*;
 @Slf4j
 public class SucheServiceTests {
 
-    private SucheService service = new SucheService(null, zaehlstelleMapper, zaehlungMapper);
+    private SucheService service = new SucheService(null, null, null);
 
     @Test
     public void testIsDate() {

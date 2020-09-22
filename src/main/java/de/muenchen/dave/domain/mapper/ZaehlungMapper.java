@@ -1,7 +1,7 @@
 package de.muenchen.dave.domain.mapper;
 
 import de.muenchen.dave.domain.dtos.BearbeiteZaehlungDTO;
-import de.muenchen.dave.domain.dtos.SucheCountSuggestDTO;
+import de.muenchen.dave.domain.dtos.SucheZaehlungSuggestDTO;
 import de.muenchen.dave.domain.elasticsearch.Zaehlung;
 import de.muenchen.dave.services.IndexServiceUtils;
 import org.mapstruct.AfterMapping;
@@ -53,10 +53,16 @@ public interface ZaehlungMapper {
         }
     }
 
-    public SucheCountSuggestDTO bean2SucheCountSuggestDto(Zaehlung bean);
+    /**
+     * bean auf SucheZaehlungSuggestDto
+     *
+     * @param bean
+     * @return
+     */
+    public SucheZaehlungSuggestDTO bean2SucheZaehlungSuggestDto(Zaehlung bean);
 
     @AfterMapping
-    default void toSucheCountSuggestDTO(@MappingTarget SucheCountSuggestDTO dto, Zaehlung bean) {
+    default void toSucheCountSuggestDTO(@MappingTarget SucheZaehlungSuggestDTO dto, Zaehlung bean) {
         dto.setText(bean.getDatum().format(DATE_TIME_FORMATTER) + " " + bean.getProjektName());
     }
 

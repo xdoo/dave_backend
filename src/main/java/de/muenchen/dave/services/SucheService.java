@@ -2,8 +2,8 @@ package de.muenchen.dave.services;
 
 import com.google.common.collect.Lists;
 import de.muenchen.dave.domain.dtos.SucheComplexSuggestsDTO;
-import de.muenchen.dave.domain.dtos.SucheCountSuggestDTO;
-import de.muenchen.dave.domain.dtos.SucheCounterSuggestDTO;
+import de.muenchen.dave.domain.dtos.SucheZaehlstelleSuggestDTO;
+import de.muenchen.dave.domain.dtos.SucheZaehlungSuggestDTO;
 import de.muenchen.dave.domain.elasticsearch.Zaehlstelle;
 import de.muenchen.dave.domain.elasticsearch.Zaehlung;
 import de.muenchen.dave.domain.mapper.ZaehlstelleMapper;
@@ -53,17 +53,17 @@ public class SucheService {
 
         // die Zählstellen
         Page<Zaehlstelle> zaehlstellen = this.zaehlstelleIndex.suggestSearch(q, PageRequest.of(0, 3));
-        List<SucheCounterSuggestDTO> sucheCounterSuggestDTOS = zaehlstellen.get()
-                .map(z -> this.zaehlstelleMapper.sucheCounterSuggestDto(z))
+        List<SucheZaehlstelleSuggestDTO> sucheZaehlstelleSuggestDTOS = zaehlstellen.get()
+                .map(z -> this.zaehlstelleMapper.bean2SucheCounterSuggestDto(z))
                 .collect(Collectors.toList());
-        dto.setZaehlstellenVorschlaege(sucheCounterSuggestDTOS);
+        dto.setZaehlstellenVorschlaege(sucheZaehlstelleSuggestDTOS);
 
         // Aus den Zählstellen werden ggf. noch Zählungen extrahiert.
         List<Zaehlung> zaehlungen = findZaehlung(zaehlstellen, query);
-        List<SucheCountSuggestDTO> sucheCountSuggestDtos = zaehlungen.stream()
-                .map(z -> this.zaehlungMapper.bean2SucheCountSuggestDto(z))
+        List<SucheZaehlungSuggestDTO> sucheZaehlungSuggestDtos = zaehlungen.stream()
+                .map(z -> this.zaehlungMapper.bean2SucheZaehlungSuggestDto(z))
                 .collect(Collectors.toList());
-        dto.setZaehlungenVorschlaege(sucheCountSuggestDtos);
+        dto.setZaehlungenVorschlaege(sucheZaehlungSuggestDtos);
 
         // die Suggestions (TODO)
     }

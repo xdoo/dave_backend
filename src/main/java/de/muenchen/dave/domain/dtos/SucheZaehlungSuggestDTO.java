@@ -3,8 +3,8 @@ package de.muenchen.dave.domain.dtos;
 import lombok.Data;
 
 @Data
-public class SucheCountSuggestDTO {
+public class SucheZaehlungSuggestDTO {
 
     String text;
-    String countId;
+    String id;
 }

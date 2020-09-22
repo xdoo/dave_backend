@@ -5,8 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 
 @Data
-@AllArgsConstructor
-public class SucheCounterSuggestDTO {
+public class SucheZaehlstelleSuggestDTO {
 
     String text;
     String id;
