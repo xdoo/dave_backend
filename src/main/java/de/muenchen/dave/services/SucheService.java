@@ -2,10 +2,12 @@ package de.muenchen.dave.services;
 
 import com.google.common.collect.Lists;
 import de.muenchen.dave.domain.dtos.SucheComplexSuggestsDTO;
+import de.muenchen.dave.domain.dtos.SucheCountSuggestDTO;
 import de.muenchen.dave.domain.dtos.SucheCounterSuggestDTO;
 import de.muenchen.dave.domain.elasticsearch.Zaehlstelle;
 import de.muenchen.dave.domain.elasticsearch.Zaehlung;
 import de.muenchen.dave.domain.mapper.ZaehlstelleMapper;
+import de.muenchen.dave.domain.mapper.ZaehlungMapper;
 import de.muenchen.dave.repositories.elasticsearch.ZaehlstelleIndex;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -28,10 +30,12 @@ public class SucheService {
 
     private final ZaehlstelleIndex zaehlstelleIndex;
     private final ZaehlstelleMapper zaehlstelleMapper;
+    private final ZaehlungMapper zaehlungMapper;
 
-    public SucheService(ZaehlstelleIndex zaehlstelleIndex, ZaehlstelleMapper zaehlstelleMapper) {
+    public SucheService(ZaehlstelleIndex zaehlstelleIndex, ZaehlstelleMapper zaehlstelleMapper, ZaehlungMapper zaehlungMapper) {
         this.zaehlstelleIndex = zaehlstelleIndex;
         this.zaehlstelleMapper = zaehlstelleMapper;
+        this.zaehlungMapper = zaehlungMapper;
     }
 
     /**
@@ -49,11 +53,17 @@ public class SucheService {
 
         // die Zählstellen
         Page<Zaehlstelle> zaehlstellen = this.zaehlstelleIndex.suggestSearch(q, PageRequest.of(0, 3));
-        List<SucheCounterSuggestDTO> sucheCounterSuggestDTOS = zaehlstellen.get().map(z -> this.zaehlstelleMapper.sucheCounterSuggestDto(z)).collect(Collectors.toList());
+        List<SucheCounterSuggestDTO> sucheCounterSuggestDTOS = zaehlstellen.get()
+                .map(z -> this.zaehlstelleMapper.sucheCounterSuggestDto(z))
+                .collect(Collectors.toList());
         dto.setZaehlstellenVorschlaege(sucheCounterSuggestDTOS);
 
         // Aus den Zählstellen werden ggf. noch Zählungen extrahiert.
         List<Zaehlung> zaehlungen = findZaehlung(zaehlstellen, query);
+        List<SucheCountSuggestDTO> sucheCountSuggestDtos = zaehlungen.stream()
+                .map(z -> this.zaehlungMapper.bean2SucheCountSuggestDto(z))
+                .collect(Collectors.toList());
+        dto.setZaehlungenVorschlaege(sucheCountSuggestDtos);
 
         // die Suggestions (TODO)
     }
