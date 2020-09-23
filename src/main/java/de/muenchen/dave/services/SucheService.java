@@ -45,7 +45,7 @@ public class SucheService {
      *
      * @param query
      */
-    public void complexSuggest(String query) {
+    public SucheComplexSuggestsDTO complexSuggest(String query) {
         String q = this.createQueryString(query);
         log.info("query '{}'", q);
 
@@ -66,6 +66,7 @@ public class SucheService {
         dto.setZaehlungenVorschlaege(sucheZaehlungSuggestDtos);
 
         // die Suggestions (TODO)
+        return dto;
     }
 
     /**
@@ -94,17 +95,21 @@ public class SucheService {
      * @return
      */
     public Optional<Zaehlung> checkZaehlstelleForZaehlung(Zaehlstelle zaehlstelle, String query) {
-        Optional<String> optionalDate = this.extractDate(query);
         Optional<Zaehlung> optionalZaehlung;
-        if(optionalDate.isPresent()) {
-            optionalZaehlung = zaehlstelle.getZaehlungen().stream()
-                    .filter(z -> z.getDatum().format(DATE_TIME_FORMATTER).equals(optionalDate.get()))
-                    .findAny();
+        if(!zaehlstelle.getZaehlungen().isEmpty()) {
+            Optional<String> optionalDate = this.extractDate(query);
+            if (optionalDate.isPresent()) {
+                optionalZaehlung = zaehlstelle.getZaehlungen().stream()
+                        .filter(z -> z.getDatum().format(DATE_TIME_FORMATTER).equals(optionalDate.get()))
+                        .findAny();
+            } else {
+                List<String> words = Lists.newArrayList(query.split(" "));
+                optionalZaehlung = zaehlstelle.getZaehlungen().stream()
+                        .filter(z -> words.contains(z.getProjektName()))
+                        .findAny();
+            }
         } else {
-            List<String> words = Lists.newArrayList(query.split(" "));
-            optionalZaehlung = zaehlstelle.getZaehlungen().stream()
-                    .filter(z -> words.contains(z.getProjektName()))
-                    .findAny();
+            optionalZaehlung = Optional.ofNullable(null);
         }
         return optionalZaehlung;
     }
