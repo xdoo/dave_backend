@@ -50,7 +50,7 @@ public class SucheServiceTests {
         Zaehlstelle zs1 = new Zaehlstelle();
         Zaehlung z1 = new Zaehlung();
         z1.setDatum(LocalDate.parse("2017-04-03"));
-        z1.setProjektName("Foo");
+        z1.setProjektName("Foobla");
         Zaehlung z2 = new Zaehlung();
         z2.setDatum(LocalDate.parse("2014-07-20"));
         z2.setProjektName("foo");
@@ -60,7 +60,7 @@ public class SucheServiceTests {
         zs1.setZaehlungen(Lists.newArrayList(z1, z2, z3));
 
         // Test mit Datum
-        Optional<Zaehlung> optionalZaehlung1 = this.service.checkZaehlstelleForZaehlung(zs1, "Nymphenburg 20.7.14 bla");
+        Optional<Zaehlung> optionalZaehlung1 = this.service.checkZaehlstelleForZaehlung(zs1, "Nymphenburg 20 bla");
         assertThat(optionalZaehlung1.isPresent(), is(true));
         assertThat(optionalZaehlung1.get(), is(equalTo(z2)));
 

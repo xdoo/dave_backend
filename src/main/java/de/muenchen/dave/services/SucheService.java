@@ -97,21 +97,24 @@ public class SucheService {
     public Optional<Zaehlung> checkZaehlstelleForZaehlung(Zaehlstelle zaehlstelle, String query) {
         Optional<Zaehlung> optionalZaehlung;
         if(!zaehlstelle.getZaehlungen().isEmpty()) {
-            Optional<String> optionalDate = this.extractDate(query);
-            if (optionalDate.isPresent()) {
-                optionalZaehlung = zaehlstelle.getZaehlungen().stream()
-                        .filter(z -> z.getDatum().format(DATE_TIME_FORMATTER).equals(optionalDate.get()))
-                        .findAny();
-            } else {
-                List<String> words = Lists.newArrayList(query.split(" "));
-                optionalZaehlung = zaehlstelle.getZaehlungen().stream()
-                        .filter(z -> words.contains(z.getProjektName()))
-                        .findAny();
-            }
+            List<String> words = Lists.newArrayList(query.split(" "));
+            optionalZaehlung = zaehlstelle.getZaehlungen().stream()
+                    .filter(z -> this.filterWords(words, z))
+                    .findAny();
         } else {
             optionalZaehlung = Optional.ofNullable(null);
         }
         return optionalZaehlung;
+    }
+
+    public boolean filterWords(List<String> words, Zaehlung z) {
+        Optional<String> finding = words.stream()
+                .filter(
+                        w ->    z.getDatum().format(DATE_TIME_FORMATTER).startsWith(w) ||
+                                z.getProjektName().startsWith(w)
+                )
+                .findAny();
+        return finding.isPresent();
     }
 
     /**
