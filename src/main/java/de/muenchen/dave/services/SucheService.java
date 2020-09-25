@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class SucheService {
 
-    private static final Pattern DE_DATE = Pattern.compile("\\d{1,2}.\\d{1,2}.\\d{2,4}");
+    private static final Pattern DE_DATE = Pattern.compile("\\d{1,2}[.]\\d{0,2}[.]{0,1}\\d{0,4}");
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
     private final ZaehlstelleIndex zaehlstelleIndex;
@@ -99,7 +99,7 @@ public class SucheService {
         if(!zaehlstelle.getZaehlungen().isEmpty()) {
             List<String> words = Lists.newArrayList(query.split(" "));
             optionalZaehlung = zaehlstelle.getZaehlungen().stream()
-                    .filter(z -> this.filterWords(words, z))
+                    .filter(z -> this.filterZaehlung(words, z))
                     .findAny();
         } else {
             optionalZaehlung = Optional.ofNullable(null);
@@ -107,10 +107,18 @@ public class SucheService {
         return optionalZaehlung;
     }
 
-    public boolean filterWords(List<String> words, Zaehlung z) {
+    /**
+     * Prüft, ob eines der Suchworte auf die angegebenen Attribute
+     * einer Zählung passt.
+     *
+     * @param words
+     * @param z
+     * @return
+     */
+    public boolean filterZaehlung(List<String> words, Zaehlung z) {
         Optional<String> finding = words.stream()
                 .filter(
-                        w ->    z.getDatum().format(DATE_TIME_FORMATTER).startsWith(w) ||
+                        w ->    z.getDatum().format(DATE_TIME_FORMATTER).startsWith(this.cleanseDate(w)) ||
                                 z.getProjektName().startsWith(w)
                 )
                 .findAny();
@@ -129,30 +137,15 @@ public class SucheService {
         StringBuilder queryBuilder = new StringBuilder();
         String[] words = query.split(" ");
         for(int i = 0; i < words.length; i++) {
-            if(this.isDate(words[i])){
-                queryBuilder.append(this.rewriteDate(words[i])).append(" ");
-            } else {
-                queryBuilder.append(words[i]).append("* ");
-            }
+            // es wird jedes Wort geprüft, ob es ein Datum ist
+            // und dann entsprechend aufbereitet, dass damit
+            // gesucht werden kann.
+            String word = this.cleanseDate(words[i]);
+
+            // Wildcard für jedes Suchwort.
+            queryBuilder.append(word).append("* ");
         }
         return queryBuilder.toString().trim();
-    }
-
-    /**
-     * Prüft und extrahiert das Datum als String, wenn die
-     * Suchanfrage ein Datum enthält.
-     *
-     * @param query
-     * @return
-     */
-    public Optional<String> extractDate(String query) {
-        Matcher matcher = DE_DATE.matcher(query);
-        String date = null;
-        if(matcher.find()) {
-            date = matcher.group();
-            date = this.cleanseDate(date);
-        }
-        return Optional.ofNullable(date);
     }
 
     /**
@@ -167,32 +160,36 @@ public class SucheService {
 
     /**
      * Fügt in ein Datum führende Nullen ein und ergänzt das
-     * Jahr ggf. um die Tausender.
+     * Jahr ggf. um die Tausender. Wenn es sich nicht um ein Datum handelt,
+     * dann wird einfach der String wieder zurück gegeben.
      *
-     * @param date
+     * @param word
      * @return
      */
-    public String cleanseDate(String date) {
-        String[] x = date.split("\\.");
-        String d = x[0].length() < 2 ? 0 + x[0] : x[0];
-        String m = x[1].length() < 2 ? 0 + x[1] : x[1];
-        String y = x[2].length() < 4 ? 20 + x[2] : x[2];
-        return d+"."+m+"."+y;
-    }
+    public String cleanseDate(String word) {
 
-    /**
-     * Wandelt das deutsche Datum in einen Datumsstring um
-     * der von ES interpretiert werden kann.
-     *
-     * @param date
-     * @return
-     */
-    public String rewriteDate(String date) {
-        String[] x = date.split("\\.");
-        String d = x[0].length() < 2 ? 0 + x[0] : x[0];
-        String m = x[1].length() < 2 ? 0 + x[1] : x[1];
-        String y = x[2].length() < 4 ? 20 + x[2] : x[2];
-        return y+m+d;
+        if(this.isDate(word)) {
+            String[] x = word.split("\\.");
+            StringBuilder result = new StringBuilder();
+
+            if (x.length > 0) {
+                String d = x[0].length() < 2 ? 0 + x[0] : x[0];
+                result.append(d).append(".");
+            }
+
+            if(x.length > 1) {
+                String m = x[1].length() < 2 ? 0 + x[1] : x[1];
+                result.append(m).append(".");
+            }
+
+            if(x.length > 2) {
+                String y = x[2].length() < 4 ? 20 + x[2] : x[2];
+                result.append(y);
+            }
+            return result.toString();
+        } else {
+            return word;
+        }
     }
 
 }

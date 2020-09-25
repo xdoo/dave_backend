@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -26,23 +27,49 @@ public class SucheServiceTests {
     }
 
     @Test
-    public void testRewriteDate() {
-        assertThat(this.service.rewriteDate("11.12.2011"), is(equalTo("20111211")));
-        assertThat(this.service.rewriteDate("1.2.2011"), is(equalTo("20110201")));
-        assertThat(this.service.rewriteDate("01.04.11"), is(equalTo("20110401")));
-    }
-
-    @Test
     public void testCreateQueryString() {
         assertThat(this.service.createQueryString("foo bar"), is(equalTo("foo* bar*")));
-        assertThat(this.service.createQueryString("foo bar 1.12.17"), is(equalTo("foo* bar* 20171201")));
+        assertThat(this.service.createQueryString("foo bar 1.12"), is(equalTo("foo* bar* 01.12.*")));
     }
 
     @Test
-    public void testExtractDate() {
-        Optional<String> od = this.service.extractDate("Nymphenburg 12.1.16 Foo");
-        assertThat(od.isPresent(), is(true));
-        assertThat(od.get(), is(equalTo("12.01.2016")));
+    public void testCleanseDate() {
+        String d1 = this.service.cleanseDate("12.1.16");
+        assertThat(d1, is(equalTo("12.01.2016")));
+
+        String d2 = this.service.cleanseDate("foo");
+        assertThat(d2, is(equalTo("foo")));
+
+        String d3 = this.service.cleanseDate("12.3");
+        assertThat(d3, is(equalTo("12.03.")));
+
+        String d4 = this.service.cleanseDate("12");
+        assertThat(d4, is(equalTo("12")));
+
+        String d5 = this.service.cleanseDate("1");
+        assertThat(d5, is(equalTo("1")));
+
+        String d6 = this.service.cleanseDate("3.");
+        assertThat(d6, is(equalTo("03.")));
+    }
+
+    @Test
+    public void testFilterZaehlung() {
+        Zaehlung z1 = new Zaehlung();
+        z1.setDatum(LocalDate.parse("2017-04-03"));
+        z1.setProjektName("Foobla");
+
+        ArrayList<String> w1 = Lists.newArrayList("Moosach", "Foo");
+        assertThat(this.service.filterZaehlung(w1, z1), is(true));
+
+        ArrayList<String> w2 = Lists.newArrayList("Moosach", "Bar", "3.");
+        assertThat(this.service.filterZaehlung(w2, z1), is(true));
+
+        ArrayList<String> w3 = Lists.newArrayList("Moosach", "Bar", "3");
+        assertThat(this.service.filterZaehlung(w3, z1), is(false));
+
+        ArrayList<String> w4 = Lists.newArrayList("Moosach", "Bar", "4.");
+        assertThat(this.service.filterZaehlung(w4, z1), is(false));
     }
 
     @Test

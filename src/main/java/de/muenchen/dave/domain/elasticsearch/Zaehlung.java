@@ -15,7 +15,7 @@ public class Zaehlung {
 
     String id;
 
-    @Field(type = FieldType.Date, format = DateFormat.basic_date)
+    @Field(type = FieldType.Date, format = DateFormat.custom, pattern = "dd.MM.uuuu")
     LocalDate datum;
 
     int jahr;
