@@ -2,6 +2,7 @@ package de.muenchen.dave.domain.mapper;
 
 import de.muenchen.dave.domain.dtos.BearbeiteZaehlstelleDTO;
 import de.muenchen.dave.domain.dtos.BearbeiteZaehlstelleDTORandomFactory;
+import de.muenchen.dave.domain.dtos.SucheZaehlstelleSuggestDTO;
 import de.muenchen.dave.domain.elasticsearch.Zaehlstelle;
 import de.muenchen.dave.domain.elasticsearch.ZaehlstelleRandomFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +41,7 @@ public class ZaehlstelleMapperTests {
     @Test
     public void testBean2Dto() {
         Zaehlstelle bean = ZaehlstelleRandomFactory.getOne();
-        BearbeiteZaehlstelleDTO dto = this.mapper.BearbeiteDto(bean);
+        BearbeiteZaehlstelleDTO dto = this.mapper.bearbeiteDto(bean);
 
         assertThat(dto, hasProperty("nummer", equalTo(bean.getNummer())));
         assertThat(dto, hasProperty("name", equalTo(bean.getName())));
@@ -52,5 +53,14 @@ public class ZaehlstelleMapperTests {
         assertThat(dto, hasProperty("lat", equalTo(bean.getPunkt().getLat())));
         assertThat(dto, hasProperty("lng", equalTo(bean.getPunkt().getLon())));
 
+    }
+
+    @Test
+    public void testToSucheCounterSuggestDto () {
+        Zaehlstelle bean = ZaehlstelleRandomFactory.getOne();
+        SucheZaehlstelleSuggestDTO dto = this.mapper.bean2SucheCounterSuggestDto(bean);
+
+        assertThat(dto, hasProperty("id", equalTo(bean.getId())));
+        assertThat(dto, hasProperty("text", equalTo(bean.getNummer() + " " + bean.getName())));
     }
 }

@@ -1,6 +1,7 @@
 package de.muenchen.dave.domain.mapper;
 import de.muenchen.dave.domain.dtos.BearbeiteZaehlungDTO;
 import de.muenchen.dave.domain.dtos.BearbeiteZaehlungDTORandomFactory;
+import de.muenchen.dave.domain.dtos.SucheZaehlungSuggestDTO;
 import de.muenchen.dave.domain.elasticsearch.Zaehlung;
 import de.muenchen.dave.domain.elasticsearch.ZaehlungRandomFactory;
 import lombok.extern.slf4j.Slf4j;
@@ -8,6 +9,8 @@ import org.elasticsearch.common.Strings;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.time.format.DateTimeFormatter;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -67,5 +70,14 @@ public class ZaehlungMapperTests {
         assertThat(dto, hasProperty("suchwoerter", equalTo(bean.getSuchwoerter())));
 
         assertThat(dto, hasProperty("sonderzaehlung", is(bean.getSonderzaehlung().equals(ZaehlungMapper.SONDERZAEHLUNG))));
+    }
+
+    @Test
+    public void testBean2SucheZaehlungsSuggestDto() {
+        Zaehlung bean = ZaehlungRandomFactory.getOne();
+        SucheZaehlungSuggestDTO dto = this.mapper.bean2SucheZaehlungSuggestDto(bean);
+
+        assertThat(dto, hasProperty("id", equalTo(bean.getId())));
+        assertThat(dto, hasProperty("text", equalTo(bean.getDatum().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")) + " " + bean.getProjektName())));
     }
 }

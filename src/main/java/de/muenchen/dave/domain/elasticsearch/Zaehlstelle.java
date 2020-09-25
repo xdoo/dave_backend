@@ -13,6 +13,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 import org.springframework.data.elasticsearch.annotations.GeoPointField;
 import org.springframework.data.elasticsearch.core.geo.GeoPoint;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -59,6 +60,6 @@ public class Zaehlstelle {
     @Field(type = FieldType.Text)
     String suchwoerter;
 
-    List<Zaehlung> zaehlungen;
+    List<Zaehlung> zaehlungen = new ArrayList<>();
 
 }
